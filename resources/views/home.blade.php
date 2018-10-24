@@ -10,7 +10,7 @@
               </div>
             </div>
 
-           
+          
             <table-component></table-component>
             <form-component></form-component>
 
