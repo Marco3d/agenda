@@ -14,7 +14,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::where('user_id',auth()->id())->get();
+        $contacts = Contact::orderBy('id', 'DESC')->where('user_id',auth()->id())->get();
         return $contacts;
     }
 
@@ -36,7 +36,13 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $contact = new contact();
+        $contact->name = $request->name;
+        $contact->email = $request->email;
+        $contact->phone = $request->phone;
+        $contact->user_id = auth()->id();
+        $contact->save();
+        return $contact;
     }
 
     /**

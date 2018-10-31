@@ -30,7 +30,7 @@
 
           
           
-            <form-component></form-component>
+            <form-component @new="addContact"></form-component>
 
 
               
@@ -66,6 +66,10 @@
            deleteContact(index){
               this.contacts.splice(index,1);
              },
+
+           addContact(contact){
+                this.contacts.unshift(contact);
+            },   
 
 
       
