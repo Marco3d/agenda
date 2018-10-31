@@ -16,6 +16,8 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('mycontacts-component', require('./components/MyContactsComponent.vue'));
+
 Vue.component('table-component', require('./components/TableComponent.vue'));
 Vue.component('form-component', require('./components/FormComponent.vue'));
 

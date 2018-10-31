@@ -1,82 +1,70 @@
 <template>
 
-  <table class="table mt-3">
-  <thead class="thead-dark">
 
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Email</th>
-      <th scope="col">Teléfono</th>
-      <th scope="col">Acciones</th>
-    </tr>
-
-  </thead>
-  <tbody>
-    <tr v-for= "contact in contacts">
+    <tr >
       <th scope="row">{{ contact.id}}</th>
       <td>{{ contact.name}}</td>
       <td>{{ contact.email}}</td>
       <td>{{ contact.phone}}</td>
 
       <td><button type="button" class="btn btn-success btn-sm">Editar</button>
-          <button type="button" class="btn btn-danger btn-sm" v-on:click.prevent = "deleteContacts(contact)">Eliminar</button>
+          <button type="button" class="btn btn-danger btn-sm" v-on:click.prevent = "onClickDelete()">Eliminar</button>
       </td>
     </tr>
-  
 
-  </tbody>
-</table>
 
 </template>
 
 <script>
     export default {
+
+         props: ['contact'],
         mounted() {
-           this.getContacts();
+            console.log('Component mounted.')
         },
-        
-        data(){
-          return{
-            contacts: []
-          }
-        },
+
         methods:{
-          getContacts(){
-           var urlContacts= "contacts";
-           axios.get(urlContacts).then(response=>{
-            this.contacts = response.data
-           });   
+           onClickDelete(){
 
-          },
+                swal({
+                  title: 'Está usted seguro?',
+                  text: "Este proceso no se puede revertir!",
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Si, borrarlo!'
+                }).then((result) => {
+                       
+                    
+                  if (result.value) {
 
-        deleteContacts(contact){
-            swal({
-              title: 'Are you sure?',
-              text: "You won't be able to revert this!",
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-              if (result.value) {
-                var url = 'contacts/' + contact.id;
-                      axios.delete(url).then(response =>{
-                        this.getContacts();
-                      });
-                swal(
-                  'Deleted!',
-                  'Your file has been deleted.',
-                  'success'
-                )
-              }
-            })
-         }
-       }
+                 
+                      axios.delete(`/contacts/${this.contact.id}`).then(()=>{
+                         this.$emit('delete');
+                    });
+                    swal(
+                      'Borrado!',
+                      'El registro ha sido eliminado.',
+                      'success'
+                    )
+                  }
+                })
 
-    }
+                
+               
+            },
+         
+
+         
+      }
+   }
 </script>
+
+  
+                
+                 
+
 
 
 
