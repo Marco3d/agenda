@@ -40,7 +40,8 @@
                   if (result.value) {
 
                  
-                      axios.delete(`/contacts/${this.contact.id}`).then(()=>{
+                      var url = 'contacts/' + contact.id;
+                      axios.delete(url).then(response =>{
                          this.$emit('delete');
                     });
                     swal(
